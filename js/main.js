@@ -14,7 +14,7 @@ function resize() {
   S = 96 * K; G = 1.5 * H;
   TOP = topProbe.offsetTop;
   ctx.imageSmoothingEnabled = false;
-  renderBg(); layoutRings();
+  renderBg(); layoutRings(); resizeWafflePile();
 }
 window.addEventListener('resize', resize);
 window.addEventListener('orientationchange', () => setTimeout(resize, 200));
@@ -31,6 +31,7 @@ function frame(now) {
   if (hitstop > 0) { hitstop -= rdt; dt = 0; }
   if (!paused) {
     updateEnts(dt); updateHalves(dt); updateParts(dt); updateDecals(dt); updateOverlays(dt, rdt);
+    updateWaffles(dt);
     if (state === 'menu' || state === 'rack') updateMenu(rdt);
     updateGame(dt, rdt); tickGroups();
   }
@@ -47,6 +48,10 @@ function render(now) {
   if (state === 'menu' || state === 'rack') drawMenu(now);
   drawHalves();
   drawEnts();
+  drawWafflePile();
+  drawWaffleDollops();
+  drawWaffleLanders();
+  if (state === 'menu' || state === 'rack') drawMenuLabels();
   drawParts();
   drawFlashes();
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
