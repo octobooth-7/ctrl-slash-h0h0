@@ -126,7 +126,7 @@ function updateDecals(dt) {
 function drawDecals() {
   ctx.font = `${Math.round(11 * K)}px "JetBrains Mono", monospace`; ctx.textAlign = 'center';
   for (const d of decals) {
-    const a = Math.min(1, d.life / 2.5) * 0.6; ctx.globalAlpha = a;
+    const a = Math.min(1, d.life / 2.5) * 0.9; ctx.globalAlpha = a; // light cream greys out on the dark editor at lower alpha
     const w = d.c.width * d.s; ctx.drawImage(d.c, d.x - w / 2, d.y - w / 2, w, w);
     if (d.txt) { ctx.fillStyle = '#6a9955'; ctx.fillText(d.txt, d.x, d.y + w * 0.42); }
   }

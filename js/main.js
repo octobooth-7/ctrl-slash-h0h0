@@ -2,7 +2,7 @@
 /* main.js — sizing, main loop, render order, keyboard, boot */
 
 const topProbe = document.createElement('div');
-topProbe.style.cssText = 'position:absolute;left:0;width:1px;height:1px;pointer-events:none;top:calc(env(safe-area-inset-top,0px) + var(--tab-h,0px))';
+topProbe.style.cssText = 'position:absolute;left:0;width:1px;height:1px;pointer-events:none;top:calc(var(--sat) + var(--tab-h,0px))';
 el('app').appendChild(topProbe);
 
 function resize() {

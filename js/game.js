@@ -97,7 +97,7 @@ function sliceBuddy(b, a, grp) {
   const i = ents.indexOf(b); if (i < 0) return;
   ents.splice(i, 1);
   spawnHalves(b, a);
-  gore(b.x, b.y, a, b.special ? 1.6 : 1, b.special === 'agent' ? ['#a970ff', '#6f42c1', '#e8d5ff', '#23a8f2'] : BUDDY_PAL);
+  gore(b.x, b.y, a, b.special ? 1.6 : 1, b.special === 'agent' ? ['#a970ff', '#6f42c1', '#e8d5ff', BUDDY_PAL[0]] : BUDDY_PAL);
   decal(b.x, b.y, a, 1, b.special === 'agent' ? ['#a970ff', '#6f42c1'] : BUDDY_PAL);
   slashFx(b.x, b.y, a); hitstop = Math.max(hitstop, 0.035);
   Sfx.slice(rand(0.9, 1.15)); vibrate(10); shake(3);
@@ -162,7 +162,7 @@ function monoHit(b, a) {
   if (b.hitCd > 0) return;
   b.hitCd = 0.07; b.hits++;
   b.vr = 0; b.rot = rand(-0.2, 0.2);
-  sparks(b.x, b.y, 8, '#ffd24a', 2.4); gore(b.x, b.y, a, 0.25, ['#0077b8', '#23a8f2', '#ff8c3b']); slashFx(b.x, b.y, a, 1.2);
+  sparks(b.x, b.y, 8, '#ffd24a', 2.4); gore(b.x, b.y, a, 0.25, [BUDDY_PAL[2], BUDDY_PAL[0], '#ff8c3b']); slashFx(b.x, b.y, a, 1.2);
   Sfx.thunk(b.hits); shake(2); vibrate(6);
   if (run && state === 'play') addScore(8, b.x + rand(-40, 40), b.y - 50 * K, '#ffd24a', 0.9);
   if (b.hits >= 16) monoExplode(b, a);
@@ -171,7 +171,7 @@ function monoTimeout(b) { if (b.hits > 0) monoExplode(b, -0.6); }
 function monoExplode(b, a) {
   const i = ents.indexOf(b); if (i < 0) return;
   ents.splice(i, 1);
-  spawnHalves(b, a, 1.8); gore(b.x, b.y, a, 3, ['#23a8f2', '#0077b8', '#004e7c', '#ff8c3b', '#ffd24a']); decal(b.x, b.y, a, 1.8);
+  spawnHalves(b, a, 1.8); gore(b.x, b.y, a, 3, [BUDDY_PAL[0], BUDDY_PAL[2], BUDDY_PAL[3], '#ff8c3b', '#ffd24a']); decal(b.x, b.y, a, 1.8);
   shock(b.x, b.y, '#ffd24a', 3.5); flash(0.4, '#ffd24a'); shake(12); hitstop = 0.12; Sfx.boom(false); vibrate([30, 30, 60]);
   if (b.hat) { collectHat(b.hat, b.x, b.y); ents.push(Object.assign(makeLooseHat(b.hat, b.x, b.y - 40, rand(-1, 1) * S, -3 * S), { g: G * 0.8 })); }
   if (run && state === 'play') {

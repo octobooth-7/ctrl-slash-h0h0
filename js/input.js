@@ -95,9 +95,9 @@ function drawTrails() {
 
 // ---------- Menu rings (slice the buddy inside to choose)
 const menuRings = [
-  { id: 'classic', label: 'CLASSIC', sub: '3 strikes · bombs end it', hat: null, color: '#3794ff' },
-  { id: 'arcade', label: 'ARCADE', sub: '60 seconds · pure greed', hat: 'propeller-hat', color: '#ffd24a' },
-  { id: 'rack', label: 'HAT RACK', sub: 'equip · blades', hat: 'grand-top-hat-monocle', color: '#c586c0' },
+  { id: 'classic', label: 'CLASSIC', sub: '3 strikes · bombs end it', hat: null, color: '#ff79b7' },
+  { id: 'arcade', label: 'ARCADE', sub: '60 seconds · pure greed', hat: 'propeller-hat', color: '#79d6c1' },
+  { id: 'rack', label: 'HAT RACK', sub: 'equip · blades', hat: 'grand-top-hat-monocle', color: '#fff0cf' },
 ];
 for (const r of menuRings) Object.assign(r, { x: 0, y: 0, c: mkCanvas(96, 96), t: rand(0, 2000), cut: 0, pop: 0 });
 let menuAmbient = 1.2, menuBusy = false;
