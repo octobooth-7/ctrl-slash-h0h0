@@ -19,7 +19,7 @@ const Q = isCoarse ? 0.7 : 1;             // particle quality
 const PCAP = isCoarse ? 600 : 1000;       // particle cap
 
 // ---------- Palette
-const BUDDY_PAL = ['#23a8f2', '#23a8f2', '#0077b8', '#004e7c', '#5cc4ff'];
+const BUDDY_PAL = ['#fffaf3', '#fffaf3', '#efe4d6', '#cbb9a4', '#ffffff']; // whipped cream: base, base, shadow, deep shadow, peak
 const SYNTAX = ['#569cd6', '#ce9178', '#dcdcaa', '#4ec9b0', '#b5cea8', '#c586c0', '#9cdcfe', '#d16969', '#ffd700'];
 const CONFETTI = ['#ff4f81', '#ffd24a', '#4ec9b0', '#3794ff', '#c586c0', '#89d185', '#ff8c3b', '#ffffff'];
 const GLYPHS = ['{', '}', ';', '()', '=>', '</>', '&&', '||', '!=', '[]', '0', '1', '#', '$', '@', '*', '::', '++', '??', '//', '%', '<T>', '...'];
@@ -109,9 +109,28 @@ const HAT_IMG = {};
 function loadImg(src) {
   return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
 }
+// Buddy is whipped cream: recolour the sprite's three blues to BUDDY_PAL's cream ramp (the source PNGs stay untouched).
+const hexRgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const CREAM_SWAP = [['#23a8f2', BUDDY_PAL[0]], ['#0077b8', BUDDY_PAL[2]], ['#004e7c', BUDDY_PAL[3]]].map((s) => s.map(hexRgb));
+function creamify(img) {
+  const c = mkCanvas(img.width, img.height); const g = c.getContext('2d');
+  g.drawImage(img, 0, 0);
+  let d;
+  try { d = g.getImageData(0, 0, c.width, c.height); } catch { return img; } // unreadable canvas (file://): keep the original
+  const p = d.data;
+  for (let i = 0; i < p.length; i += 4) {
+    if (!p[i + 3]) continue;
+    for (const [f, t] of CREAM_SWAP) {
+      if (Math.abs(p[i] - f[0]) + Math.abs(p[i + 1] - f[1]) + Math.abs(p[i + 2] - f[2]) > 24) continue;
+      p[i] = t[0]; p[i + 1] = t[1]; p[i + 2] = t[2]; break;
+    }
+  }
+  g.putImageData(d, 0, 0);
+  return c;
+}
 async function loadAssets() {
   const jobs = [];
-  for (const A of Object.values(ANIMS)) jobs.push(loadImg(`assets/${A.file}.spritesheet.png`).then((i) => { A.img = i; }));
+  for (const A of Object.values(ANIMS)) jobs.push(loadImg(`assets/${A.file}.spritesheet.png`).then((i) => { A.img = creamify(i); }));
   for (const h of HATS) jobs.push(loadImg(`assets/hats/${h.id}.png`).then((i) => { HAT_IMG[h.id] = i; }));
   await Promise.all(jobs);
 }
@@ -188,6 +207,7 @@ function vibrate(p) { try { if (!reduceMotion && navigator.vibrate) navigator.vi
 // ---------- Editor background (pre-rendered)
 const bgCanvas = mkCanvas(1, 1);
 const CODE = [
+  '// waffle special: golden edges, extra syrup',
   "import { Buddy, Hat, Blade } from './pets';",
   "import { confetti } from '@vscode/party';",
   '',
@@ -237,7 +257,7 @@ function highlight(g, line, x, y) {
 function renderBg() {
   bgCanvas.width = Math.ceil(W * DPR); bgCanvas.height = Math.ceil(H * DPR);
   const g = bgCanvas.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, 0, 0);
-  g.fillStyle = '#1e1e1e'; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#17262b'; g.fillRect(0, 0, W, H);
   const fs = W < 520 ? 11 : 13, lh = Math.round(fs * 1.6), gutter = W < 520 ? 34 : 54;
   g.font = `${fs}px "JetBrains Mono", monospace`; g.textBaseline = 'middle';
   g.globalAlpha = 0.34;
