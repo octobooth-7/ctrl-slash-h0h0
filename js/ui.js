@@ -97,6 +97,7 @@ const UI = {
       strikes: [['cmd', 'npm test'], ['err', `✗ 3 buddies escaped to production`], ['warn', `PagerDuty: ${randi(12, 99)} alerts · on-call is crying`], ['err', 'Build failed with exit code 1']],
       time: [['cmd', 'git push --force origin main'], ['ok', '✓ shipped in 60.00s'], ['dim', `${s.sliced} buddies refactored · ${s.hats} hats collected`], ['com', '# nobody reviewed this']],
     }[r.cause || 'time'].slice();
+    lines.push(['com', '# waffle special: golden edges, extra syrup']);
     if (r.newBest) lines.push(['ok', `★ new personal best (was ${fmt(prevBest)}) — tag a release`]);
     if (r.distinct.length === 17) lines.push(['warn', '👑 FULL WARDROBE. you absolute haberdasher.']);
     const log = el('over-log'); log.innerHTML = '';

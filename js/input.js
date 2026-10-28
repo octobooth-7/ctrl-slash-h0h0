@@ -95,9 +95,9 @@ function drawTrails() {
 
 // ---------- Menu rings (slice the buddy inside to choose)
 const menuRings = [
-  { id: 'classic', label: 'CLASSIC', sub: '3 strikes · bombs end it', hat: null, color: '#3794ff' },
-  { id: 'arcade', label: 'ARCADE', sub: '60 seconds · pure greed', hat: 'propeller-hat', color: '#ffd24a' },
-  { id: 'rack', label: 'HAT RACK', sub: 'equip · blades', hat: 'grand-top-hat-monocle', color: '#c586c0' },
+  { id: 'classic', label: 'CLASSIC', sub: '3 strikes · bombs end it', hat: null, color: '#ff79b7' },
+  { id: 'arcade', label: 'ARCADE', sub: '60 seconds · pure greed', hat: 'propeller-hat', color: '#79d6c1' },
+  { id: 'rack', label: 'HAT RACK', sub: 'equip · blades', hat: 'grand-top-hat-monocle', color: '#fff0cf' },
 ];
 for (const r of menuRings) Object.assign(r, { x: 0, y: 0, c: mkCanvas(96, 96), t: rand(0, 2000), cut: 0, pop: 0 });
 let menuAmbient = 1.2, menuBusy = false;
@@ -157,11 +157,22 @@ function drawMenu(now) {
       compose(r.c, 'idle', frameOf(ANIMS.idle, r.t), r.hat, null);
       ctx.drawImage(r.c, -48 * k, -64 * k + bob, 96 * k, 96 * k);
     }
+    ctx.restore();
+  }
+}
+
+function drawMenuLabels() {
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (const r of menuRings) {
+    const R = r.R;
+    ctx.save(); ctx.translate(r.x, r.y);
     ctx.font = `700 ${Math.round(clamp(S * 0.17, 13, 22))}px Silkscreen, monospace`;
     ctx.lineWidth = 4; ctx.strokeStyle = '#111'; ctx.strokeText(r.label, 0, R + 16);
     ctx.fillStyle = '#fff'; ctx.fillText(r.label, 0, R + 16);
-    ctx.font = `${Math.round(clamp(S * 0.1, 10, 12))}px "JetBrains Mono", monospace`; ctx.fillStyle = '#8b949e';
-    ctx.fillText(r.sub, 0, R + 16 + clamp(S * 0.17, 13, 22));
+    ctx.font = `${Math.round(clamp(S * 0.1, 10, 12))}px "JetBrains Mono", monospace`;
+    const subY = R + 16 + clamp(S * 0.17, 13, 22);
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(23,38,43,.96)'; ctx.strokeText(r.sub, 0, subY);
+    ctx.fillStyle = '#c9c4bb'; ctx.fillText(r.sub, 0, subY);
     ctx.restore();
   }
 }

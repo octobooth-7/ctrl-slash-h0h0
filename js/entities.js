@@ -162,7 +162,7 @@ function spawnHalves(b, sliceA, power = 1) {
     // cut face: a stripe of "internals" along the edge
     g.globalCompositeOperation = 'source-atop';
     for (let i = 0; i < 3; i++) {
-      g.strokeStyle = ['#004e7c', '#ff4f81', '#5cc4ff'][i]; g.lineWidth = [7, 3.5, 1.5][i];
+      g.strokeStyle = [BUDDY_PAL[3], '#ff4f81', '#ffffff'][i]; g.lineWidth = [7, 3.5, 1.5][i];
       g.beginPath(); g.moveTo(cx - dx * 300 + nx * side * i * 1.2, cy - dy * 300 + ny * side * i * 1.2); g.lineTo(cx + dx * 300 + nx * side * i * 1.2, cy + dy * 300 + ny * side * i * 1.2); g.stroke();
     }
     g.globalCompositeOperation = 'source-over';
@@ -179,7 +179,7 @@ function updateHalves(dt) {
     h.drip -= dt;
     if (h.drip <= 0 && parts.length < PCAP * 0.7) {
       h.drip = rand(0.03, 0.08);
-      emit({ k: 0, x: h.x + rand(-6, 6) * h.k, y: h.y + rand(-6, 6) * h.k, vx: rand(-0.2, 0.2) * S, vy: 0, size: pick([2, 3, 3]) * K, color: pick(['#004e7c', '#0077b8', '#ff4f81', '#5cc4ff']), max: 0.8 });
+      emit({ k: 0, x: h.x + rand(-6, 6) * h.k, y: h.y + rand(-6, 6) * h.k, vx: rand(-0.2, 0.2) * S, vy: 0, size: pick([2, 3, 3]) * K, color: pick([BUDDY_PAL[3], BUDDY_PAL[2], '#ff4f81', '#ffffff']), max: 0.8 });
     }
     if (h.life <= 0 || h.y > H + S * 2) halves.splice(i, 1);
   }
