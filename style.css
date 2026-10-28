@@ -195,7 +195,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .menu-meta { margin-top: 12px; display: flex; gap: 16px; font-size: 11px; letter-spacing: .12em; color: var(--dim); opacity: 0; animation: rise .5s .85s forwards; }
 .menu-meta b { color: var(--cream); }
 .m-equip { color: var(--t-leg); }
-.hint { position: absolute; bottom: calc(var(--sb-h) + 14px); margin: 0; font-size: 11px; color: var(--dim); letter-spacing: .06em; display: flex; gap: 6px; align-items: center; }
+.hint { position: absolute; bottom: calc(var(--sb-h) + 14px); margin: 0; padding: 5px 10px; border: 1px solid rgba(169,194,197,.45); border-radius: 999px; background: rgba(23,38,43,.92); box-shadow: 0 2px 8px rgba(0,0,0,.35); font-size: 11px; color: var(--cream); letter-spacing: .06em; display: flex; gap: 6px; align-items: center; }
 .kbd { display: inline-block; padding: 0 5px; border: 1px solid #555; border-bottom-width: 2px; border-radius: 3px; font-size: 10px; color: var(--fg); line-height: 15px; }
 @media (pointer: coarse) { .hint .kbd, .actions .kbd { display: none; } }
 @media (max-height: 460px) {

@@ -157,11 +157,22 @@ function drawMenu(now) {
       compose(r.c, 'idle', frameOf(ANIMS.idle, r.t), r.hat, null);
       ctx.drawImage(r.c, -48 * k, -64 * k + bob, 96 * k, 96 * k);
     }
+    ctx.restore();
+  }
+}
+
+function drawMenuLabels() {
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (const r of menuRings) {
+    const R = r.R;
+    ctx.save(); ctx.translate(r.x, r.y);
     ctx.font = `700 ${Math.round(clamp(S * 0.17, 13, 22))}px Silkscreen, monospace`;
     ctx.lineWidth = 4; ctx.strokeStyle = '#111'; ctx.strokeText(r.label, 0, R + 16);
     ctx.fillStyle = '#fff'; ctx.fillText(r.label, 0, R + 16);
-    ctx.font = `${Math.round(clamp(S * 0.1, 10, 12))}px "JetBrains Mono", monospace`; ctx.fillStyle = '#8b949e';
-    ctx.fillText(r.sub, 0, R + 16 + clamp(S * 0.17, 13, 22));
+    ctx.font = `${Math.round(clamp(S * 0.1, 10, 12))}px "JetBrains Mono", monospace`;
+    const subY = R + 16 + clamp(S * 0.17, 13, 22);
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(23,38,43,.96)'; ctx.strokeText(r.sub, 0, subY);
+    ctx.fillStyle = '#c9c4bb'; ctx.fillText(r.sub, 0, subY);
     ctx.restore();
   }
 }

@@ -62,6 +62,7 @@ Then open http://localhost:8000. Pushes to `main` deploy to GitHub Pages through
 | `js/audio.js` | WebAudio sound effects, synthesized at runtime |
 | `js/fx.js` | Particles, stains, popups, banners, screen shake |
 | `js/entities.js` | Buddies, bombs, loose hats, sliced halves |
+| `js/waffles.js` | Waffle pile, buddy landings, and cream dollops |
 | `js/game.js` | Run state, scoring, hat bonuses, specials, wave spawner |
 | `js/input.js` | Pointer trails, hit tests, menu rings |
 | `js/ui.js` | HUD, Hat Rack, pause, game-over terminal |

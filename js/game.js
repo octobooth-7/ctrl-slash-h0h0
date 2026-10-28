@@ -30,6 +30,7 @@ function newRun(mode) {
 
 function startRun(mode) {
   ents.length = 0; halves.length = 0; timers.length = 0; flyers.length = 0; banners.length = 0;
+  waffleLanders.length = 0;
   run = newRun(mode);
   timeScale = targetScale = 1; hitstop = 0;
   state = 'play';
@@ -295,9 +296,12 @@ function updateGame(dt, rdt) {
   // cull off-screen entities; in classic, a missed buddy is a failed CI check
   for (let i = ents.length - 1; i >= 0; i--) {
     const e = ents[i];
+    const landed = e.type === 'buddy' && e.vy > 0 && e.entered &&
+      e.y + 26 * K * e.scale >= pileTop(e.x);
     const out = (e.y > H + S * e.scale && e.vy > 0) || (e.frenzy && (e.x < -S * 2 || e.x > W + S * 2));
-    if (!out) continue;
+    if (!landed && !out) continue;
     ents.splice(i, 1);
+    if (landed) landBuddy(e);
     if (state === 'play' && run.mode === 'classic' && e.type === 'buddy' && !e.special && !e.frenzy && run.frenzyT <= 0) strike(e);
   }
   if (state !== 'play') return;
